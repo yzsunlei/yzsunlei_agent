@@ -15,6 +15,11 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "element-plus": "^2.9.7",
     "vitepress": "^1.6.3"
+  },
+  "devDependencies": {
+    "less": "^4.2.2",
+    "less-loader": "^12.2.0"
   }
 }

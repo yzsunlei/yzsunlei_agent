@@ -21,5 +21,14 @@ export default defineConfig({
     footer: {
       copyright: "Copyright © 2016-2025 <a href='https://www.yzsunlei.com/' target='_blank'>yzsunlei.com</a> ｜ <a href='https://beian.miit.gov.cn/' target='_blank'>鄂ICP备14015590号-8</a>",
     }
+  },
+  vite: {
+    css: {
+      preprocessorOptions: {
+        less: {
+          // 这里可以添加 Less 的全局变量或其他配置
+        }
+      }
+    }
   }
 })
