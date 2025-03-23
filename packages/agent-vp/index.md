@@ -3,22 +3,25 @@
 layout: home
 
 hero:
-  name: "agent-vp"
-  text: "helpful ai agent sets"
+  name: "Agent-vp"
+  text: "My helpful ai agent sets"
+  image:
+    src: /assets/banner.png
+    alt: AI Agent
   actions:
     - theme: brand
-      text: Markdown Examples
-      link: /markdown-examples
+      text: 使用介绍
+      link: /pages/agent-desc
     - theme: alt
-      text: API Examples
-      link: /api-examples
+      text: 点击使用
+      link: /pages/agent-home
 
 features:
-  - title: Feature A
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature B
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature C
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
+  - title: 多平台Agent
+    details: 支持配置使用文心智能体、扣子智能体、清华智谱等多家平台
+  - title: 支持解析丰富内容
+    details: 支持解析Markdown、表格、图表、PPT等多种格式展示
+  - title: 多场景插件支持
+    details: 支持在网页、浏览器插件、Vscode插件上进行使用
 ---
 
