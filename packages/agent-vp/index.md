@@ -4,7 +4,7 @@ layout: home
 
 hero:
   name: "Agent-vp"
-  text: "My helpful ai agent sets"
+  text: "My wonderful ai agent sets"
   image:
     src: /assets/banner.png
     alt: AI Agent
@@ -17,7 +17,7 @@ hero:
       link: /pages/agent-home
 
 features:
-  - title: 多平台Agent
+  - title: 多平台Agent调用
     details: 支持配置使用文心智能体、扣子智能体、清华智谱等多家平台
   - title: 支持解析丰富内容
     details: 支持解析Markdown、表格、图表、PPT等多种格式展示

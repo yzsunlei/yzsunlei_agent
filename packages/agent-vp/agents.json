@@ -1,0 +1,23 @@
+[
+    {
+        "name": "前端AI助理",
+        "platforms": [
+            {
+                "name": "百度-文心",
+                "url": "https://mbd.baidu.com/ma/s/3NK2W7IQ"
+            },
+            {
+                "name": "字节-扣子",
+                "url": "https://doubao.com/bot/ivqVCPGW"
+            },
+            {
+                "name": "腾讯-元器",
+                "url": "https://yuanqi.tencent.com/agent/C9MStCVdatGH?from=share"
+            },
+            {
+                "name": "清华-智谱",
+                "url": "https://chatglm.cn/share/F3GII"
+            }
+        ]
+    }
+]
