@@ -18,6 +18,7 @@
     "axios": "^1.8.4",
     "element-plus": "^2.9.7",
     "marked": "^15.0.7",
+    "sse.js": "^2.6.0",
     "vitepress": "^1.6.3"
   },
   "devDependencies": {

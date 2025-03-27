@@ -12,7 +12,7 @@
       </div>
     </div>
     <div class="chat-body">
-      <el-input v-model="userInput" type="textarea" rows="5" placeholder="请输入您的问题" @keyup.enter="sendMessage" clearable />
+      <el-input v-model="userInput" type="textarea" rows="3" placeholder="请输入您的问题" @keyup.enter="sendMessage" clearable />
     </div>
     <div class="chat-footer">
       <el-button type="primary" @click="sendMessage">发送</el-button>
@@ -26,8 +26,10 @@ import agents from "/agents.json";
 import { getAnswerApi, postConversationApi, postTokenApi } from "/services/index";
 
 const agentList = ref(agents || []);
-const currentAgent = ref({});
-const currentPlatform = ref({});
+const defaultAgent = agentList.value?.[0];
+const defaultPlatform = agentList.value?.[0]?.platforms?.[0];
+const currentAgent = ref(agentList.value?.[0]);
+const currentPlatform = ref(agentList.value?.[0]?.platforms?.[0]);
 const userInput = ref('');
 
 const emit = defineEmits(['send-message', 'get-answer', 'post-conversation']);
@@ -44,17 +46,19 @@ const changePlatform = (platform) => {
 };
 
 const sendMessage = async () => {
+  if (!userInput.value) return;
   console.log('sendMessage：', userInput.value);
   emit('send-message', userInput.value)
-  getAnswer(userInput.value);
+  // getAnswer(userInput.value);
+  postConversation(userInput.value);
   userInput.value = "";
 };
 
 const postToken = async () => {
   try {
     const res = await postTokenApi({
-      agent: currentAgent.value,
-      platform: currentPlatform.value
+      agent: currentAgent.value || defaultAgent,
+      platform: currentPlatform.value || defaultPlatform,
     });
     // console.log('postTokenApi', res);
     localStorage.setItem(`AGENT_${currentPlatform.value?.type}_TOKEN`, res);
@@ -67,8 +71,8 @@ const getAnswer = async (question) => {
   try {
     const res = await getAnswerApi({
       question: question,
-      agent: currentAgent.value,
-      platform: currentPlatform.value
+      agent: currentAgent.value || defaultAgent,
+      platform: currentPlatform.value || defaultPlatform
     });
     emit('get-answer', res);
     console.log('getAnswerApi', res);
@@ -79,13 +83,18 @@ const getAnswer = async (question) => {
 
 const postConversation = async (question) => {
   try {
-    const res = await postConversationApi({
+    const source = await postConversationApi({
       question: question,
-      agent: currentAgent.value,
-      platform: currentPlatform.value
+      agent: currentAgent.value || defaultAgent,
+      platform: currentPlatform.value || defaultPlatform
     });
-    emit('post-conversation', res);
-    console.log('postConversationApi', res);
+    source.addEventListener('message', function(e) {
+      // Assuming we receive JSON-encoded data payloads:
+      var payload = JSON.parse(e.data);
+      // console.log(payload);
+      emit('post-conversation', payload);
+    });
+    console.log('postConversationApi', source);
   } catch (error) {
     console.log('postConversationApi error', error);
   }
@@ -96,7 +105,8 @@ const postConversation = async (question) => {
 .chat-card {
   width: 100%;
   margin: 0 auto;
-  padding: 20px;
+  margin-top: 40px;
+  padding: 0px;
 
   .chat-header {
     margin-bottom: 8px;

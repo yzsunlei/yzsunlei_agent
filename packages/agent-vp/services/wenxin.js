@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { SSE } from "sse.js";
 
 // 创建一个 Axios 实例
 const wenxinClient = axios.create({
@@ -51,4 +52,36 @@ export const getWenxinChatResponse = async (message) => {
     console.error('文心 API 请求失败:', error);
     throw error;
   }
-}; 
+};
+
+// 获取流式对话响应
+export const postWenxinConversationResponse = async (message) => {
+  try {
+    const url = `https://agentapi.baidu.com/assistant/conversation?appId=${import.meta.env.VITE_WENXIN_CLIENT_ID}&secretKey=${import.meta.env.VITE_WENXIN_CLIENT_SECRET}`;
+    const payload = JSON.stringify({
+      message: {
+        content: {
+          type: 'text',
+          value: {
+            showText: message
+          }
+        }
+      },
+      source: import.meta.env.VITE_WENXIN_CLIENT_ID,
+      from: 'openapi',
+      openId: 'your_open_id' // 替换为实际的 openId
+    });
+    const source = new SSE(url,
+      {
+        headers: { 'Content-Type': 'application/json' },
+        method: "post",
+        payload: payload
+      }
+    );
+    return source;
+  } catch (error) {
+    console.error('文心 API 请求失败:', error);
+    throw error;
+  }
+};
+
