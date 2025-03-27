@@ -6,8 +6,8 @@
       </div>
       <div class="chat-current" v-if="currentAgent.name">
         <span><i @click="setCurrentAgent({})"><</i> {{ currentAgent.name }}</span>
-        <el-select v-model="currentPlatform" size="medium" style="width: 120px" @change="changePlatform">
-          <el-option :label="it.name" :value="it.name" v-for="it in currentAgent.platforms" />
+        <el-select v-model="currentPlatform.type" size="medium" style="width: 120px" @change="changePlatform">
+          <el-option :label="it.name" :value="it.type" v-for="it in currentAgent.platforms" />
         </el-select>
       </div>
     </div>
@@ -23,23 +23,72 @@
 <script setup>
 import { ref } from 'vue';
 import agents from "/agents.json";
+import { getAnswerApi, postConversationApi, postTokenApi } from "/services/index";
 
 const agentList = ref(agents || []);
 const currentAgent = ref({});
-const currentPlatform = ref("");
+const currentPlatform = ref({});
 const userInput = ref('');
+
+const emit = defineEmits(['send-message', 'get-answer', 'post-conversation']);
 
 const setCurrentAgent = (it) => {
   currentAgent.value = it;
-  currentPlatform.value = it.platforms?.[0]?.name;
+  currentPlatform.value = it.platforms?.[0];
+  postToken();
 };
 
 const changePlatform = (platform) => {
-  currentPlatform.value = platform;
+  currentPlatform.value = currentAgent.value.platforms?.find(it => it.type === platform);
+  postToken();
 };
 
-const sendMessage = () => {
-  console.log('发送消息：', userInput.value);
+const sendMessage = async () => {
+  console.log('sendMessage：', userInput.value);
+  emit('send-message', userInput.value)
+  getAnswer(userInput.value);
+  userInput.value = "";
+};
+
+const postToken = async () => {
+  try {
+    const res = await postTokenApi({
+      agent: currentAgent.value,
+      platform: currentPlatform.value
+    });
+    // console.log('postTokenApi', res);
+    localStorage.setItem(`AGENT_${currentPlatform.value?.type}_TOKEN`, res);
+  } catch (error) {
+    console.log('postTokenApi error', error);
+  }
+};
+
+const getAnswer = async (question) => {
+  try {
+    const res = await getAnswerApi({
+      question: question,
+      agent: currentAgent.value,
+      platform: currentPlatform.value
+    });
+    emit('get-answer', res);
+    console.log('getAnswerApi', res);
+  } catch (error) {
+    console.log('getAnswerApi error', error);
+  }
+};
+
+const postConversation = async (question) => {
+  try {
+    const res = await postConversationApi({
+      question: question,
+      agent: currentAgent.value,
+      platform: currentPlatform.value
+    });
+    emit('post-conversation', res);
+    console.log('postConversationApi', res);
+  } catch (error) {
+    console.log('postConversationApi error', error);
+  }
 };
 </script>
 

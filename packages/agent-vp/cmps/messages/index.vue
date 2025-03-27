@@ -1,20 +1,27 @@
 <template>
   <div class="chat-messages">
-    <div v-for="(message, index) in messages" :key="index" class="message">
-      <strong>{{ message.sender }}:</strong> {{ message.text }}
+    <div v-for="(message, index) in messages" :key="index" class="message" :class="message.sender">
+      <strong>{{ message.sender }}:</strong>
+      <template v-if="message.type === 'txt'">
+        <div v-html="markdown(message.message)"></div>
+      </template>
     </div>
   </div>
 </template>
 
-<script>
-export default {
-  name: 'Messages',
-  props: {
-    messages: {
-      type: Array,
-      required: true,
-    },
+<script setup>
+// import marked from 'marked';
+
+const props = defineProps({
+  messages: {
+    type: Array,
+    required: true,
   },
+});
+
+const markdown = (text) => {
+  return text;
+  // return marked.parse(text);
 };
 </script>
 

@@ -9,13 +9,13 @@ const wenxinClient = axios.create({
 });
 
 // 获取 access_token
-export const getWenxinAccessToken = async (clientId, clientSecret) => {
+export const getWenxinAccessToken = async () => {
   try {
     const response = await axios.get('https://openapi.baidu.com/oauth/2.0/token', {
       params: {
         grant_type: 'client_credentials',
-        client_id: clientId,
-        client_secret: clientSecret
+        client_id: import.meta.env.VITE_WENXIN_CLIENT_ID,
+        client_secret: import.meta.env.VITE_WENXIN_CLIENT_SECRET
       }
     });
     return response.data.access_token;
@@ -26,7 +26,7 @@ export const getWenxinAccessToken = async (clientId, clientSecret) => {
 };
 
 // 获取对话响应
-export const getWenxinChatResponse = async (message, appId, secretKey) => {
+export const getWenxinChatResponse = async (message) => {
   try {
     const response = await wenxinClient.post('/assistant/getAnswer', {
       message: {
@@ -37,13 +37,13 @@ export const getWenxinChatResponse = async (message, appId, secretKey) => {
           }
         }
       },
-      source: 'openapi',
+      source: import.meta.env.VITE_WENXIN_CLIENT_ID,
       from: 'openapi',
       openId: 'your_open_id' // 替换为实际的 openId
     }, {
       params: {
-        appId,
-        secretKey
+        appId: import.meta.env.VITE_WENXIN_CLIENT_ID,
+        secretKey: import.meta.env.VITE_WENXIN_CLIENT_SECRET
       }
     });
     return response.data;

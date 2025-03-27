@@ -9,16 +9,16 @@ const kouziClient = axios.create({
 });
 
 // 获取访问令牌
-export const getKouziAccessToken = async (clientId, clientSecret, code) => {
+export const getKouziAccessToken = async (code) => {
   try {
     const response = await axios.post('https://api.coze.cn/api/permission/oauth2/token', {
       grant_type: 'authorization_code',
-      client_id: clientId,
+      client_id: import.meta.env.VITE_KOUZI_CLIENT_ID,
       redirect_uri: 'https://www.coze.cn/open/oauth/apps',
       code
     }, {
       headers: {
-        'Authorization': `Bearer ${clientSecret}`
+        'Authorization': `Bearer ${import.meta.env.VITE_KOUZI_CLIENT_SECRET}`
       }
     });
     return response.data.access_token;

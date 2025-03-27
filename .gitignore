@@ -4,3 +4,4 @@ cache
 dist
 .DS_Store
 .hbuilderx
+.env
