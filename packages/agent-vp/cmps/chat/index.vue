@@ -6,8 +6,8 @@
       </div>
       <div class="chat-current" v-if="currentAgent.name">
         <span><i @click="setCurrentAgent({})"><</i> {{ currentAgent.name }}</span>
-        <el-select v-model="currentPlatform.type" size="medium" style="width: 120px" @change="changePlatform">
-          <el-option :label="it.name" :value="it.type" v-for="it in currentAgent.platforms" />
+        <el-select v-model="currentPlatform" :value-key="'type'" size="medium" style="width: 120px" @change="changePlatform">
+          <el-option :key="it.type" :label="it.name" :value="it" v-for="it in currentAgent.platforms" />
         </el-select>
       </div>
     </div>
@@ -21,9 +21,9 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import agents from "/agents.json";
-import { getAnswerApi, postConversationApi, postTokenApi } from "/services/index";
+import { getAnswerApi, postConversationApi, postTokenApi, normalizeResponse } from "/services/index";
 
 const agentList = ref(agents || []);
 const defaultAgent = agentList.value?.[0];
@@ -41,7 +41,8 @@ const setCurrentAgent = (it) => {
 };
 
 const changePlatform = (platform) => {
-  currentPlatform.value = currentAgent.value.platforms?.find(it => it.type === platform);
+  console.log('changePlatform', platform);
+  currentPlatform.value = platform;
   postToken();
 };
 
@@ -49,8 +50,8 @@ const sendMessage = async () => {
   if (!userInput.value) return;
   console.log('sendMessage：', userInput.value);
   emit('send-message', userInput.value)
-  // getAnswer(userInput.value);
-  postConversation(userInput.value);
+  getAnswer(userInput.value);
+  // postConversation(userInput.value);
   userInput.value = "";
 };
 
@@ -75,7 +76,7 @@ const getAnswer = async (question) => {
       platform: currentPlatform.value || defaultPlatform
     });
     emit('get-answer', res);
-    console.log('getAnswerApi', res);
+    // console.log('getAnswerApi', res);
   } catch (error) {
     console.log('getAnswerApi error', error);
   }
@@ -90,15 +91,19 @@ const postConversation = async (question) => {
     });
     source.addEventListener('message', function(e) {
       // Assuming we receive JSON-encoded data payloads:
-      var payload = JSON.parse(e.data);
+      var data = JSON.parse(e.data);
       // console.log(payload);
-      emit('post-conversation', payload);
+      emit('post-conversation', normalizeResponse(data, currentPlatform.value || defaultPlatform));
     });
     console.log('postConversationApi', source);
   } catch (error) {
     console.log('postConversationApi error', error);
   }
 };
+
+onMounted(() => {
+  setCurrentAgent(defaultAgent);
+});
 </script>
 
 <style scoped>

@@ -47,6 +47,51 @@ curl --location 'https://agentapi.baidu.com/assistant/conversation?appId=xxx&sec
 }'
 ```
 
+#### 智谱清言
+
+文档地址：https://zhipu-ai.feishu.cn/wiki/X8ykw4IXpieCOxkYxbrcxT9vn5f
+
+说明：对每个开发者调用会话接口的次数也设置了上限，目前为一天5000次，总量不限。
+
+##### 获取token
+
+说明：
+```
+// getToken
+POST https://chatglm.cn/chatglm/assistant-api/v1/get_token
+```
+
+请求示例：
+```
+// todo
+```
+
+##### Assistant 会话调用
+
+说明：
+```
+// 请求路径和方式：POST /stream  
+POST https://chatglm.cn/chatglm/assistant-api/v1/stream
+```
+
+请求示例：
+```
+// todo
+```
+
+##### Assistant 会话调用（非流式输出）
+
+说明：
+```
+// 请求路径和方式：POST /stream_sync  
+POST https://chatglm.cn/chatglm/assistant-api/v1/stream_sync
+```
+
+请求示例：
+```
+// todo
+```
+
 #### 字节扣子
 
 文档地址：https://www.coze.cn/open/docs/developer_guides/coze_api_overview
@@ -117,20 +162,7 @@ curl --location --request POST 'https://api.coze.cn/v3/chat?conversation_id=7374
 }'
 ```
 
-#### 智谱清言
 
-##### 获取token
-
-说明：
-```
-// getToken
-POST https://chatglm.cn/chatglm/assistant-api/v1/get_token
-```
-
-请求示例：
-```
-// todo
-```
 
 #### 腾讯元器
 

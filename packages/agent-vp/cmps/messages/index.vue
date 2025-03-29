@@ -2,7 +2,7 @@
   <div class="chat-messages">
     <div v-for="(message, index) in messages" :key="index" class="message" :class="message.sender">
       <strong>{{ message.sender }}:</strong>
-      <template v-if="message.type === 'txt'">
+      <template v-if="message.type === 'text'">
         <div class="word" v-html="markdown(message.message)"></div>
       </template>
       <template v-if="message.type === 'markdown'">
