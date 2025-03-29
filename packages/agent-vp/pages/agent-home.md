@@ -19,24 +19,29 @@ import Messages from '../cmps/messages/index.vue';
 const chatMessages = ref();
 const messages = ref([
   {  message: '你好！你是谁？', sender: 'user', type: 'text' },
-  {  message: '我是Agent-vp，一个集成百度-文心、清华-智谱、字节-扣子等多家智能体平台的Agent工具，我可以调用多平台的Agent调用，并支持解析Markdown、表格、图表、PPT等多种格式内容。如果你有任何问题或需要帮助，尽管问我吧！', sender: 'agent', type: 'text' }
+  {  message: '我是Agent-vp，一个集成百度-文心、清华-智谱、字节-扣子等多家智能体平台的Agent工具，我可以调用多平台的Agent API，并支持解析Markdown、表格、图表、PPT等多种格式内容。如果你有任何问题或需要帮助，尽管问我吧！', sender: 'agent', type: 'text' }
 ]);
 
 const onSendMessage = (message) => {
   messages.value.push({
     sender: 'user',
-    type: 'txt',
+    type: 'text',
     message: message
   })
+  setTimeout(() => {
+    scrollMessageToBottom();   
+  }, 1000);
 };
 
-const onGetAnswer = (answer) => {
-  const contents = answer?.data?.content;
+const onGetAnswer = (contents) => {
   messages.value.push({
     sender: 'agent',
-    type: contents?.[0]?.dataType || 'txt',
-    message: contents?.[0]?.data
+    type: contents?.[0]?.dataType || 'text',
+    message: contents?.[0]?.text
   })
+  setTimeout(() => {
+    scrollMessageToBottom();   
+  }, 1000);
 }
 
 const onPostConversation = (contents) => {
@@ -71,6 +76,7 @@ const scrollMessageToBottom = () => {
 
 <style lang="less">
 .VPDoc {
+  padding-bottom: 0px !important;
   .content {
     padding-bottom: 0px !important;
   }

@@ -5,14 +5,16 @@
         <el-tag type="primary" v-for="it in agentList" @click="setCurrentAgent(it)">{{ it.name }}</el-tag>
       </div>
       <div class="chat-current" v-if="currentAgent.name">
-        <span><i @click="setCurrentAgent({})"><</i> {{ currentAgent.name }}</span>
-        <el-select v-model="currentPlatform" :value-key="'type'" size="medium" style="width: 120px" @change="changePlatform">
+        <span><i @click="setCurrentAgent({})">&lt;</i> {{ currentAgent.name }}</span>
+        <el-select v-model="currentPlatform" :value-key="'type'" size="medium" style="width: 120px"
+          @change="changePlatform">
           <el-option :key="it.type" :label="it.name" :value="it" v-for="it in currentAgent.platforms" />
         </el-select>
       </div>
     </div>
     <div class="chat-body">
-      <el-input v-model="userInput" type="textarea" rows="3" placeholder="请输入您的问题" @keyup.enter="sendMessage" clearable />
+      <el-input v-model="userInput" type="textarea" rows="2" placeholder="请输入您的问题" @keyup.enter="sendMessage"
+        clearable />
     </div>
     <div class="chat-footer">
       <el-button type="primary" @click="sendMessage">发送</el-button>
@@ -23,7 +25,7 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import agents from "/agents.json";
-import { getAnswerApi, postConversationApi, postTokenApi, normalizeResponse } from "/services/index";
+import { getAnswerApi, postConversationApi, postTokenApi, normalizeAnswerResponse, normalizeConversationResponse } from "/services/index";
 
 const agentList = ref(agents || []);
 const defaultAgent = agentList.value?.[0];
@@ -50,8 +52,8 @@ const sendMessage = async () => {
   if (!userInput.value) return;
   console.log('sendMessage：', userInput.value);
   emit('send-message', userInput.value)
-  getAnswer(userInput.value);
-  // postConversation(userInput.value);
+  // getAnswer(userInput.value);
+  postConversation(userInput.value);
   userInput.value = "";
 };
 
@@ -75,7 +77,7 @@ const getAnswer = async (question) => {
       agent: currentAgent.value || defaultAgent,
       platform: currentPlatform.value || defaultPlatform
     });
-    emit('get-answer', res);
+    emit('get-answer', normalizeAnswerResponse(res, currentPlatform.value || defaultPlatform));
     // console.log('getAnswerApi', res);
   } catch (error) {
     console.log('getAnswerApi error', error);
@@ -89,11 +91,14 @@ const postConversation = async (question) => {
       agent: currentAgent.value || defaultAgent,
       platform: currentPlatform.value || defaultPlatform
     });
-    source.addEventListener('message', function(e) {
-      // Assuming we receive JSON-encoded data payloads:
-      var data = JSON.parse(e.data);
-      // console.log(payload);
-      emit('post-conversation', normalizeResponse(data, currentPlatform.value || defaultPlatform));
+    source.addEventListener('message', function (e) {
+      try {
+        var data = JSON.parse(e.data);
+        // console.log(data);
+        emit('post-conversation', normalizeConversationResponse(data, currentPlatform.value || defaultPlatform));
+      } catch (error) {
+        console.log('postConversationApi parse error', error);
+      }
     });
     console.log('postConversationApi', source);
   } catch (error) {
@@ -115,12 +120,14 @@ onMounted(() => {
 
   .chat-header {
     margin-bottom: 8px;
+
     .chat-agent-list {
       .el-tag {
         margin-right: 8px;
         cursor: pointer;
       }
     }
+
     .chat-current {
       display: flex;
       justify-content: space-between;
@@ -130,16 +137,17 @@ onMounted(() => {
         cursor: pointer;
       }
     }
-   }
+  }
 
-   .chat-body {
+  .chat-body {
     .el-input {
       margin-top: 8px;
     }
-   }
-   .chat-footer {
+  }
+
+  .chat-footer {
     margin-top: 8px;
     text-align: right;
-   }
+  }
 }
 </style>

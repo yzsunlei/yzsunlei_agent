@@ -13,14 +13,14 @@
                 "url": "https://chatglm.cn/share/F3GII"
             },
             {
-                "name": "字节-扣子",
-                "type": "kouzi",
-                "url": "https://doubao.com/bot/ivqVCPGW"
-            },
-            {
                 "name": "腾讯-元器",
                 "type": "yuanqi",
                 "url": "https://yuanqi.tencent.com/agent/C9MStCVdatGH?from=share"
+            },
+            {
+                "name": "字节-扣子",
+                "type": "kouzi",
+                "url": "https://doubao.com/bot/ivqVCPGW"
             }
         ]
     }

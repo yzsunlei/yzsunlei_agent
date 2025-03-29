@@ -92,6 +92,60 @@ POST https://chatglm.cn/chatglm/assistant-api/v1/stream_sync
 // todo
 ```
 
+
+#### 腾讯元器
+
+文档地址：https://docs.qq.com/aio/p/scxmsn78nzsuj64?p=BVUAh9OGFvSEFA7CgBOyED4
+
+说明：当前每个元器用户有1个亿的api token体验使用额度，当免费额度消耗完后，可绑定腾讯云账号进行付费使用。
+
+##### 调用对话
+
+说明：
+```
+POST https://open.hunyuan.tencent.com/openapi/v1/agent/chat/completions
+```
+
+请求示例：
+```
+import requests
+import json
+
+# 定义 API 的 URL
+url = 'https://open.hunyuan.tencent.com/openapi/v1/agent/chat/completions'
+
+# 定义请求头
+headers = {
+    'X-Source': 'openapi',
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer <元器用户的token>'
+}
+
+# 定义请求体
+data = {
+    "assistant_id": "I4aVQTHpsJro",
+    "user_id": "username",
+    "stream": False,
+    "messages": [
+        {
+            "role": "user",
+            "content": [
+                {
+                    "type": "text",
+                    "text": "能创建一个穿着古装的头像吗？"
+                }
+            ]
+        }
+    ]
+}
+
+# 将请求体转换为 JSON 格式的字符串
+json_data = json.dumps(data)
+
+# 发送 POST 请求
+response = requests.post(url, headers=headers, json=data)  # 使用 json 参数自动设置正确的 Content-Type
+```
+
 #### 字节扣子
 
 文档地址：https://www.coze.cn/open/docs/developer_guides/coze_api_overview
@@ -160,59 +214,4 @@ curl --location --request POST 'https://api.coze.cn/v3/chat?conversation_id=7374
         }
     ]
 }'
-```
-
-
-
-#### 腾讯元器
-
-文档地址：https://docs.qq.com/aio/p/scxmsn78nzsuj64?p=BVUAh9OGFvSEFA7CgBOyED4
-
-说明：当前每个元器用户有1个亿的api token体验使用额度，当免费额度消耗完后，可绑定腾讯云账号进行付费使用。
-
-##### 调用对话
-
-说明：
-```
-POST https://open.hunyuan.tencent.com/openapi/v1/agent/chat/completions
-```
-
-请求示例：
-```
-import requests
-import json
-
-# 定义 API 的 URL
-url = 'https://open.hunyuan.tencent.com/openapi/v1/agent/chat/completions'
-
-# 定义请求头
-headers = {
-    'X-Source': 'openapi',
-    'Content-Type': 'application/json',
-    'Authorization': 'Bearer <元器用户的token>'
-}
-
-# 定义请求体
-data = {
-    "assistant_id": "I4aVQTHpsJro",
-    "user_id": "username",
-    "stream": False,
-    "messages": [
-        {
-            "role": "user",
-            "content": [
-                {
-                    "type": "text",
-                    "text": "能创建一个穿着古装的头像吗？"
-                }
-            ]
-        }
-    ]
-}
-
-# 将请求体转换为 JSON 格式的字符串
-json_data = json.dumps(data)
-
-# 发送 POST 请求
-response = requests.post(url, headers=headers, json=data)  # 使用 json 参数自动设置正确的 Content-Type
 ```

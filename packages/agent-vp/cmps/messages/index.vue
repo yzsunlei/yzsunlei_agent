@@ -2,10 +2,7 @@
   <div class="chat-messages">
     <div v-for="(message, index) in messages" :key="index" class="message" :class="message.sender">
       <strong>{{ message.sender }}:</strong>
-      <template v-if="message.type === 'text'">
-        <div class="word" v-html="markdown(message.message)"></div>
-      </template>
-      <template v-if="message.type === 'markdown'">
+      <template v-if="['text', 'txt', 'markdown'].includes(message.type)">
         <div class="word" v-html="markdown(message.message)"></div>
       </template>
     </div>
@@ -31,7 +28,7 @@ const markdown = (text) => {
 <style lang="less" scoped>
 .chat-messages {
   margin-top: 20px;
-  max-height: 300px;
+  max-height: 350px;
   overflow-y: auto;
 
   .message {
