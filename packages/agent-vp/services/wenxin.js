@@ -27,7 +27,7 @@ export const getWenxinAccessToken = async () => {
 };
 
 // 获取对话响应
-export const getWenxinChatResponse = async (message) => {
+export const getWenxinChatResponse = async (message, access_token, platform) => {
   try {
     const response = await wenxinClient.post('/assistant/getAnswer', {
       message: {
@@ -38,7 +38,7 @@ export const getWenxinChatResponse = async (message) => {
           }
         }
       },
-      source: import.meta.env.VITE_WENXIN_CLIENT_ID,
+      source: platform.id,
       from: 'openapi',
       openId: 'your_open_id' // 替换为实际的 openId
     }, {
@@ -55,7 +55,7 @@ export const getWenxinChatResponse = async (message) => {
 };
 
 // 获取流式对话响应
-export const postWenxinConversationResponse = async (message) => {
+export const postWenxinConversationResponse = async (message, access_token, platform) => {
   try {
     const url = `https://agentapi.baidu.com/assistant/conversation?appId=${import.meta.env.VITE_WENXIN_CLIENT_ID}&secretKey=${import.meta.env.VITE_WENXIN_CLIENT_SECRET}`;
     const payload = JSON.stringify({
@@ -67,7 +67,7 @@ export const postWenxinConversationResponse = async (message) => {
           }
         }
       },
-      source: import.meta.env.VITE_WENXIN_CLIENT_ID,
+      source: platform.id,
       from: 'openapi',
       openId: 'your_open_id' // 替换为实际的 openId
     });

@@ -20,7 +20,7 @@ export const getYuanqiAccessToken = async () => {
 };
 
 // 获取对话响应
-export const getYuanqiChatResponse = async (message, access_token) => {
+export const getYuanqiChatResponse = async (message, access_token, platform) => {
   try {
     const response = await yuanqiClient.post('/openapi/v1/agent/chat/completions', {
       messages: [
@@ -34,7 +34,7 @@ export const getYuanqiChatResponse = async (message, access_token) => {
           ]
         }
       ],
-      assistant_id: import.meta.env.VITE_YUANQI_ASSISTANT_ID,
+      assistant_id: platform.id,
       user_id: ''
     }, {
       headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${access_token}` },
@@ -47,7 +47,8 @@ export const getYuanqiChatResponse = async (message, access_token) => {
 };
 
 // 获取流式对话响应
-export const postYuanqiConversationResponse = async (message, access_token) => {
+export const postYuanqiConversationResponse = async (message, access_token, platform) => {
+  console.log('postYuanqiConversationResponse', message, access_token, platform);
   try {
     const url = `https://yuanqi.tencent.com/openapi/v1/agent/chat/completions`;
     const payload = JSON.stringify({
@@ -62,7 +63,7 @@ export const postYuanqiConversationResponse = async (message, access_token) => {
           ]
         }
       ],
-      assistant_id: import.meta.env.VITE_YUANQI_ASSISTANT_ID,
+      assistant_id: platform.id,
       user_id: '',
       stream: true
     });

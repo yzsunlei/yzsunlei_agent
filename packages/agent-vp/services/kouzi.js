@@ -20,10 +20,10 @@ export const getKouziAccessToken = async (code) => {
 };
 
 // 获取对话响应
-export const getKouziChatResponse = async (message, accessToken) => {
+export const getKouziChatResponse = async (message, accessToken, platform) => {
   try {
     const response = await kouziClient.post('/v3/chat', {
-      bot_id: import.meta.env.VITE_KOUZI_ASSISTANT_ID,
+      bot_id: platform.id,
       user_id: "12345678",
       auto_save_history: true,
       additional_messages: [
@@ -47,11 +47,11 @@ export const getKouziChatResponse = async (message, accessToken) => {
 };
 
 // 获取流式对话响应
-export const postKouziConversationResponse = async (message, access_token) => {
+export const postKouziConversationResponse = async (message, access_token, platform) => {
   try {
     const url = `https://api.coze.cn/v3/chat`;
     const payload = JSON.stringify({
-      bot_id: import.meta.env.VITE_KOUZI_ASSISTANT_ID,
+      bot_id: platform.id,
       user_id: "123456",
       auto_save_history: true,
       additional_messages: [

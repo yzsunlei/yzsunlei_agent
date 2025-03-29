@@ -26,10 +26,10 @@ export const postZhipuToken = async () => {
 };
 
 // 获取对话响应
-export const getZhipuChatResponse = async (message, access_token) => {
+export const getZhipuChatResponse = async (message, access_token, platform) => {
   try {
     const response = await zhipuClient.post('/chatglm/assistant-api/v1/stream_sync', {
-      assistant_id: import.meta.env.VITE_ZHIPU_ASSISTANT_ID,
+      assistant_id: platform.id,
       prompt: message
     }, {
       headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${access_token}` },
@@ -42,11 +42,11 @@ export const getZhipuChatResponse = async (message, access_token) => {
 };
 
 // 获取流式对话响应
-export const postZhipuConversationResponse = async (message, access_token) => {
+export const postZhipuConversationResponse = async (message, access_token, platform) => {
   try {
     const url = `https://chatglm.cn/chatglm/assistant-api/v1/stream?appId=${import.meta.env.VITE_WENXIN_CLIENT_ID}&secretKey=${import.meta.env.VITE_WENXIN_CLIENT_SECRET}`;
     const payload = JSON.stringify({
-      assistant_id: import.meta.env.VITE_ZHIPU_ASSISTANT_ID,
+      assistant_id: platform.id,
       prompt: message
     });
     const source = new SSE(url,

@@ -1,11 +1,11 @@
 <template>
   <el-card class="chat-card">
     <div class="chat-header">
-      <div class="chat-agent-list" v-if="!currentAgent.name">
+      <div class="chat-agent-list">
         <el-tag type="primary" v-for="it in agentList" @click="setCurrentAgent(it)">{{ it.name }}</el-tag>
       </div>
       <div class="chat-current" v-if="currentAgent.name">
-        <span><i @click="setCurrentAgent({})">&lt;</i> {{ currentAgent.name }}</span>
+        <div class="title"><el-icon><Place /></el-icon> <span>{{ currentAgent.name }}</span></div>
         <el-select v-model="currentPlatform" :value-key="'type'" size="medium" style="width: 120px"
           @change="changePlatform">
           <el-option :key="it.type" :label="it.name" :value="it" v-for="it in currentAgent.platforms" />
@@ -134,8 +134,11 @@ onMounted(() => {
       justify-content: space-between;
       align-items: center;
 
-      i {
-        cursor: pointer;
+      .title {
+        font-size: 14px;
+        i,span {
+          vertical-align: middle;
+        }
       }
     }
   }
