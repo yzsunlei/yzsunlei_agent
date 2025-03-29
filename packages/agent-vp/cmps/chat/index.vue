@@ -91,7 +91,8 @@ const postConversation = async (question) => {
       agent: currentAgent.value || defaultAgent,
       platform: currentPlatform.value || defaultPlatform
     });
-    source.addEventListener('message', function (e) {
+    const eventName = currentPlatform.value?.type === 'kouzi' ? 'conversation.message.delta' : 'message';
+    source.addEventListener(eventName, function (e) {
       try {
         var data = JSON.parse(e.data);
         // console.log(data);

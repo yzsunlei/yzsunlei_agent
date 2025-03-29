@@ -34,7 +34,7 @@ export const getYuanqiChatResponse = async (message, access_token) => {
           ]
         }
       ],
-      assistant_id: import.meta.env.VITE_YUANQI_CLIENT_ID,
+      assistant_id: import.meta.env.VITE_YUANQI_ASSISTANT_ID,
       user_id: ''
     }, {
       headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${access_token}` },
@@ -62,7 +62,7 @@ export const postYuanqiConversationResponse = async (message, access_token) => {
           ]
         }
       ],
-      assistant_id: import.meta.env.VITE_YUANQI_CLIENT_ID,
+      assistant_id: import.meta.env.VITE_YUANQI_ASSISTANT_ID,
       user_id: '',
       stream: true
     });

@@ -1,7 +1,7 @@
 import { getWenxinAccessToken, getWenxinChatResponse, postWenxinConversationResponse } from './wenxin';
 import { postZhipuToken, getZhipuChatResponse, postZhipuConversationResponse } from './zhipu';
 import { getYuanqiAccessToken, getYuanqiChatResponse, postYuanqiConversationResponse } from './yuanqi';
-import { getKouziAccessToken, getKouziChatResponse } from './kouzi';
+import { getKouziAccessToken, getKouziChatResponse, postKouziConversationResponse } from './kouzi';
 
 export const postTokenApi = async ({ agent, platform }) => {
   switch (platform.type) {
@@ -12,9 +12,7 @@ export const postTokenApi = async ({ agent, platform }) => {
     case 'yuanqi':
       return await getYuanqiAccessToken();
     case 'kouzi':
-      // 假设需要一个授权码来获取访问令牌
-      const code = 'your_authorization_code'; // 需要替换为实际的授权码
-      return await getKouziAccessToken(code);
+      return await getKouziAccessToken();
     default:
       throw new Error('Unsupported platform type');
   }
@@ -30,8 +28,7 @@ export const getAnswerApi = async ({ question, agent, platform }) => {
     case 'yuanqi':
       return await getYuanqiChatResponse(question, access_token);
     case 'kouzi':
-      const accessToken = 'your_access_token'; // 需要替换为实际的访问令牌
-      return await getKouziChatResponse(question, agent.botId, agent.userId, accessToken);
+      return await getKouziChatResponse(question, access_token);
     default:
       throw new Error('Unsupported platform type');
   }
@@ -47,8 +44,7 @@ export const postConversationApi = async ({ question, agent, platform }) => {
     case 'yuanqi':
       return await postYuanqiConversationResponse(question, access_token);
     case 'kouzi':
-      const accessToken = 'your_access_token'; // 需要替换为实际的访问令牌
-      return await getKouziChatResponse(question, agent.botId, agent.userId, accessToken);
+      return await postKouziConversationResponse(question, access_token);
     default:
       throw new Error('Unsupported platform type');
   }
@@ -64,7 +60,7 @@ export const normalizeAnswerResponse = (response, platform) => {
     case 'yuanqi':
       return [response?.choices?.[0]?.message]?.map(it => ({ text: it.content, dataType: "text", type: "replace" }));
     case 'kouzi':
-      return response.data.content;
+      return [{ text: response?.content, dataType: response.content_type, type: "replace" }];
     default:
       throw new Error('Unsupported platform type');
   }
@@ -80,7 +76,7 @@ export const normalizeConversationResponse = (response, platform) => {
     case 'yuanqi':
       return response.choices?.map(it => ({ text: it.delta.content, dataType: "text", type: "append" }));
     case 'kouzi':
-      return response.data.content;
+      return [{ text: response?.content, dataType: response.content_type, type: "append" }];
     default:
       throw new Error('Unsupported platform type');
   }
