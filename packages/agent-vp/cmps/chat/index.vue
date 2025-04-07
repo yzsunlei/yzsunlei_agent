@@ -25,7 +25,8 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import agents from "/agents.json";
-import { getAnswerApi, postConversationApi, postTokenApi, normalizeAnswerResponse, normalizeConversationResponse } from "/services/index";
+import { getAnswerApi, postConversationApi, postTokenApi } from "/services/index";
+import { normalizeAnswerResponse, normalizeConversationResponse } from "/utils/index";
 
 const agentList = ref(agents || []);
 const defaultAgent = agentList.value?.[0];

@@ -1,7 +1,7 @@
-import { getKouziAccessToken, getKouziChatResponse, postKouziConversationResponse } from './kouzi';
-import { getYuanqiAccessToken, getYuanqiChatResponse, postYuanqiConversationResponse } from './yuanqi';
-import { postZhipuToken, getZhipuChatResponse, postZhipuConversationResponse } from './zhipu';
-import { getWenxinAccessToken, getWenxinChatResponse, postWenxinConversationResponse } from './wenxin';
+import { getKouziAccessToken, getKouziChatResponse, postKouziConversationResponse } from './kouzi.js';
+import { getYuanqiAccessToken, getYuanqiChatResponse, postYuanqiConversationResponse } from './yuanqi.js';
+import { postZhipuToken, getZhipuChatResponse, postZhipuConversationResponse } from './zhipu.js';
+import { getWenxinAccessToken, getWenxinChatResponse, postWenxinConversationResponse } from './wenxin.js';
 
 export const postTokenApi = async ({ agent, platform }) => {
   switch (platform.type) {
