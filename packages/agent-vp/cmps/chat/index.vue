@@ -53,8 +53,8 @@ const sendMessage = async () => {
   if (!userInput.value) return;
   console.log('sendMessage：', userInput.value);
   emit('send-message', userInput.value)
-  // getAnswer(userInput.value);
-  postConversation(userInput.value);
+  getAnswer(userInput.value);
+  // postConversation(userInput.value);
   userInput.value = "";
 };
 

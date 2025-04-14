@@ -6,7 +6,8 @@ const wenxinClient = axios.create({
   baseURL: 'https://agentapi.baidu.com', // 文心智能体的实际 API 地址
   headers: {
     'Content-Type': 'application/json',
-  }
+  },
+  timeout: 60000,
 });
 
 // 获取 access_token
@@ -15,8 +16,8 @@ export const getWenxinAccessToken = async () => {
     const response = await axios.get('https://openapi.baidu.com/oauth/2.0/token', {
       params: {
         grant_type: 'client_credentials',
-        client_id: import.meta.env.VITE_WENXIN_CLIENT_ID,
-        client_secret: import.meta.env.VITE_WENXIN_CLIENT_SECRET
+        client_id: process.env.VITE_WENXIN_CLIENT_ID,
+        client_secret: process.env.VITE_WENXIN_CLIENT_SECRET
       }
     });
     return response.data.access_token;
@@ -43,8 +44,8 @@ export const getWenxinChatResponse = async (message, access_token, platform) => 
       openId: 'your_open_id' // 替换为实际的 openId
     }, {
       params: {
-        appId: import.meta.env.VITE_WENXIN_CLIENT_ID,
-        secretKey: import.meta.env.VITE_WENXIN_CLIENT_SECRET
+        appId: process.env.VITE_WENXIN_CLIENT_ID,
+        secretKey: process.env.VITE_WENXIN_CLIENT_SECRET
       }
     });
     return response.data;
@@ -57,7 +58,7 @@ export const getWenxinChatResponse = async (message, access_token, platform) => 
 // 获取流式对话响应
 export const postWenxinConversationResponse = async (message, access_token, platform) => {
   try {
-    const url = `https://agentapi.baidu.com/assistant/conversation?appId=${import.meta.env.VITE_WENXIN_CLIENT_ID}&secretKey=${import.meta.env.VITE_WENXIN_CLIENT_SECRET}`;
+    const url = `https://agentapi.baidu.com/assistant/conversation?appId=${process.env.VITE_WENXIN_CLIENT_ID}&secretKey=${process.env.VITE_WENXIN_CLIENT_SECRET}`;
     const payload = JSON.stringify({
       message: {
         content: {

@@ -6,13 +6,14 @@ const kouziClient = axios.create({
   baseURL: 'https://api.coze.cn',
   headers: {
     'Content-Type': 'application/json',
-  }
+  },
+  timeout: 60000,
 });
 
 // 获取访问令牌
 export const getKouziAccessToken = async (code) => {
   try {
-    return await import.meta.env.VITE_KOUZI_CLIENT_SECRET;
+    return await process.env.VITE_KOUZI_CLIENT_SECRET;
   } catch (error) {
     console.error('获取扣子 access_token 失败:', error);
     throw error;

@@ -6,7 +6,8 @@ const zhipuClient = axios.create({
   baseURL: 'https://chatglm.cn',
   headers: {
     'Content-Type': 'application/json',
-  }
+  },
+  timeout: 60000,
 });
 
 // 获取 token
@@ -14,8 +15,8 @@ export const postZhipuToken = async () => {
   try {
     const response = await zhipuClient.post('/chatglm/assistant-api/v1/get_token', 
       {
-        api_key: import.meta.env.VITE_ZHIPU_CLIENT_ID,
-        api_secret: import.meta.env.VITE_ZHIPU_CLIENT_SECRET
+        api_key: process.env.VITE_ZHIPU_CLIENT_ID,
+        api_secret: process.env.VITE_ZHIPU_CLIENT_SECRET
       }
     );
     return response.data.result.access_token;
@@ -44,7 +45,7 @@ export const getZhipuChatResponse = async (message, access_token, platform) => {
 // 获取流式对话响应
 export const postZhipuConversationResponse = async (message, access_token, platform) => {
   try {
-    const url = `https://chatglm.cn/chatglm/assistant-api/v1/stream?appId=${import.meta.env.VITE_WENXIN_CLIENT_ID}&secretKey=${import.meta.env.VITE_WENXIN_CLIENT_SECRET}`;
+    const url = `https://chatglm.cn/chatglm/assistant-api/v1/stream?appId=${process.env.VITE_WENXIN_CLIENT_ID}&secretKey=${process.env.VITE_WENXIN_CLIENT_SECRET}`;
     const payload = JSON.stringify({
       assistant_id: platform.id,
       prompt: message

@@ -6,13 +6,14 @@ const yuanqiClient = axios.create({
   baseURL: 'https://yuanqi.tencent.com/', // 文心智能体的实际 API 地址
   headers: {
     'Content-Type': 'application/json',
-  }
+  },
+  timeout: 60000,
 });
 
 // 获取 access_token
 export const getYuanqiAccessToken = async () => {
   try {
-    return await import.meta.env.VITE_YUANQI_CLIENT_SECRET;
+    return await process.env.VITE_YUANQI_CLIENT_SECRET;
   } catch (error) {
     console.error('获取元器 access_token 失败:', error);
     throw error;

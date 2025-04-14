@@ -18,8 +18,7 @@ export const postTokenApi = async ({ agent, platform }) => {
   }
 };
 
-export const getAnswerApi = async ({ question, agent, platform }) => {
-  const access_token = localStorage.getItem(`AGENT_${platform?.type}_TOKEN`);
+export const getAnswerApi = async ({ question, agent, platform, access_token }) => {
   switch (platform.type) {
     case 'kouzi':
       return await getKouziChatResponse(question, access_token, platform);
@@ -34,8 +33,7 @@ export const getAnswerApi = async ({ question, agent, platform }) => {
   }
 };
 
-export const postConversationApi = async ({ question, agent, platform }) => {
-  const access_token = localStorage.getItem(`AGENT_${platform?.type}_TOKEN`);
+export const postConversationApi = async ({ question, agent, platform, access_token }) => {
   switch (platform.type) {
     case 'kouzi':
       return await postKouziConversationResponse(question, access_token, platform);
