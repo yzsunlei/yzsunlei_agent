@@ -65,7 +65,7 @@ const postToken = async () => {
       platform: currentPlatform.value || defaultPlatform,
     });
     // console.log('postTokenApi', res);
-    localStorage.setItem(`AGENT_${currentPlatform.value?.type}_TOKEN`, res);
+    localStorage.setItem(`AGENT_${currentPlatform.value?.type}_TOKEN`, res.data);
   } catch (error) {
     console.log('postTokenApi error', error);
   }
@@ -78,7 +78,7 @@ const getAnswer = async (question) => {
       agent: currentAgent.value || defaultAgent,
       platform: currentPlatform.value || defaultPlatform
     });
-    emit('get-answer', normalizeAnswerResponse(res, currentPlatform.value || defaultPlatform));
+    emit('get-answer', normalizeAnswerResponse(res.data, currentPlatform.value || defaultPlatform));
     // console.log('getAnswerApi', res);
   } catch (error) {
     console.log('getAnswerApi error', error);
@@ -96,7 +96,7 @@ const postConversation = async (question) => {
     source.addEventListener(eventName, function (e) {
       try {
         var data = JSON.parse(e.data);
-        // console.log(data);
+        console.log(data);
         emit('post-conversation', normalizeConversationResponse(data, currentPlatform.value || defaultPlatform));
       } catch (error) {
         console.log('postConversationApi parse error', error);

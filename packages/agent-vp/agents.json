@@ -3,16 +3,16 @@
         "name": "前端AI助理",
         "platforms": [
             {
-                "name": "字节-扣子",
-                "type": "kouzi",
-                "id": "7484911216222486554",
-                "url": "https://www.coze.cn/store/agent/7484911216222486554?bot_id=true&bid=6fpveadig7014"
-            },
-            {
                 "name": "腾讯-元器",
                 "type": "yuanqi",
                 "id": "C9MStCVdatGH",
                 "url": "https://yuanqi.tencent.com/agent/C9MStCVdatGH"
+            },
+            {
+                "name": "字节-扣子",
+                "type": "kouzi",
+                "id": "7484911216222486554",
+                "url": "https://www.coze.cn/store/agent/7484911216222486554?bot_id=true&bid=6fpveadig7014"
             },
             {
                 "name": "清华-智谱",

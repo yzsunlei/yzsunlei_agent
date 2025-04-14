@@ -1,51 +1,38 @@
-import { getKouziAccessToken, getKouziChatResponse, postKouziConversationResponse } from './kouzi';
-import { getYuanqiAccessToken, getYuanqiChatResponse, postYuanqiConversationResponse } from './yuanqi';
-import { postZhipuToken, getZhipuChatResponse, postZhipuConversationResponse } from './zhipu';
-import { getWenxinAccessToken, getWenxinChatResponse, postWenxinConversationResponse } from './wenxin';
+import axios from 'axios';
+
+const instance = axios.create({
+  baseURL: 'http://127.0.0.1:3000',
+  timeout: 10000
+})
 
 export const postTokenApi = async ({ agent, platform }) => {
-  switch (platform.type) {
-    case 'kouzi':
-      return await getKouziAccessToken();
-    case 'yuanqi':
-      return await getYuanqiAccessToken();
-    case 'zhipu':
-      return await postZhipuToken();
-    case 'wenxin':
-      return await getWenxinAccessToken();
-    default:
-      throw new Error('Unsupported platform type');
+  try {
+    const res = await instance.post('/api/postToken', { agent, platform });
+    console.log("postTokenApi", res);
+    return res;
+  } catch (error) {
+    console.error('获取数据失败:', error)
   }
 };
 
 export const getAnswerApi = async ({ question, agent, platform }) => {
   const access_token = localStorage.getItem(`AGENT_${platform?.type}_TOKEN`);
-  switch (platform.type) {
-    case 'kouzi':
-      return await getKouziChatResponse(question, access_token, platform);
-    case 'yuanqi':
-      return await getYuanqiChatResponse(question, access_token, platform);
-    case 'zhipu':
-      return await getZhipuChatResponse(question, access_token, platform);
-    case 'wenxin':
-      return await getWenxinChatResponse(question, access_token, platform);
-    default:
-      throw new Error('Unsupported platform type');
+  try {
+    const res = await instance.post('/api/getAnswer', { question, agent, access_token, platform });
+    // console.log("getAnswerApi", res);
+    return res;
+  } catch (error) {
+    console.error('获取数据失败:', error)
   }
 };
 
 export const postConversationApi = async ({ question, agent, platform }) => {
   const access_token = localStorage.getItem(`AGENT_${platform?.type}_TOKEN`);
-  switch (platform.type) {
-    case 'kouzi':
-      return await postKouziConversationResponse(question, access_token, platform);
-    case 'yuanqi':
-      return await postYuanqiConversationResponse(question, access_token, platform);
-    case 'zhipu':
-      return await postZhipuConversationResponse(question, access_token, platform);
-    case 'wenxin':
-      return await postWenxinConversationResponse(question, access_token, platform);
-    default:
-      throw new Error('Unsupported platform type');
+  try {
+    const res = await instance.post('/api/postConversation', { question, agent, access_token, platform }, { responseType: 'stream' });
+    console.log("postConversationApi", res);
+    return res.data;
+  } catch (error) {
+    console.error('获取数据失败:', error)
   }
 };
