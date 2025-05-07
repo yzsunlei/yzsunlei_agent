@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import { 
-  getAnswerApi, 
+  postAnswerApi, 
   postConversationApi, 
   postTokenApi 
 } from './services/index.js';
@@ -21,6 +21,10 @@ app.use(cors({
   allowHeaders: ['Content-Type', 'Authorization']
 }));
 app.use(bodyParser());
+
+router.get("/", async (ctx) => {
+  ctx.body = "Hello World";
+});
 
 router.post("/api/postToken", async (ctx) => {
   console.log('postTokenApi 接收到请求');
@@ -47,15 +51,15 @@ router.post("/api/postConversation", async (ctx) => {
   }
 });
 
-router.post("/api/getAnswer", async (ctx) => {
+router.post("/api/postAnswer", async (ctx) => {
   try {
     const { question, agent, platform, access_token } = ctx.request.body;
-    const response = await getAnswerApi({ question, agent, platform, access_token });
+    const response = await postAnswerApi({ question, agent, platform, access_token });
     ctx.body = response;
   } catch (error) {
-    console.error('getAnswerApi 失败:', error);
+    console.error('postAnswerApi 失败:', error);
     ctx.status = 500;
-    ctx.body = { error: 'getAnswerApi 失败' };
+    ctx.body = { error: 'postAnswerApi 失败' };
   }
 });
 

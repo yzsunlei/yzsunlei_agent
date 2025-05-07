@@ -18,7 +18,7 @@ export const postTokenApi = async ({ agent, platform }) => {
   }
 };
 
-export const getAnswerApi = async ({ question, agent, platform, access_token }) => {
+export const postAnswerApi = async ({ question, agent, platform, access_token }) => {
   switch (platform.type) {
     case 'kouzi':
       return await getKouziChatResponse(question, access_token, platform);

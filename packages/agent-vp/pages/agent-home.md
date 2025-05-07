@@ -9,7 +9,7 @@ aside: false
 
 <Messages :messages="messages" id="messages" />
 
-<Chat @send-message="onSendMessage" @get-answer="onGetAnswer" @post-conversation="onPostConversation" />
+<Chat @send-message="onSendMessage" @post-answer="onPostAnswer" @post-conversation="onPostConversation" />
 
 <script setup>
 import { ref } from 'vue';
@@ -33,7 +33,7 @@ const onSendMessage = (message) => {
   }, 1000);
 };
 
-const onGetAnswer = (contents) => {
+const onPostAnswer = (contents) => {
   messages.value.push({
     sender: 'agent',
     type: contents?.[0]?.dataType || 'text',

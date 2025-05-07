@@ -2,6 +2,7 @@ import axios from 'axios';
 
 const instance = axios.create({
   baseURL: 'http://127.0.0.1:3000',
+  // baseURL: 'http://agent-sls.yzsunlei.com',
   timeout: 10000
 })
 
@@ -15,11 +16,11 @@ export const postTokenApi = async ({ agent, platform }) => {
   }
 };
 
-export const getAnswerApi = async ({ question, agent, platform }) => {
+export const postAnswerApi = async ({ question, agent, platform }) => {
   const access_token = localStorage.getItem(`AGENT_${platform?.type}_TOKEN`);
   try {
-    const res = await instance.post('/api/getAnswer', { question, agent, access_token, platform });
-    // console.log("getAnswerApi", res);
+    const res = await instance.post('/api/postAnswer', { question, agent, access_token, platform });
+    // console.log("postAnswerApi", res);
     return res;
   } catch (error) {
     console.error('获取数据失败:', error)

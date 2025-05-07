@@ -25,7 +25,7 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import agents from "/agents.json";
-import { getAnswerApi, postConversationApi, postTokenApi } from "/services/index";
+import { postAnswerApi, postConversationApi, postTokenApi } from "/services/index";
 import { normalizeAnswerResponse, normalizeConversationResponse } from "/utils/index";
 
 const agentList = ref(agents || []);
@@ -35,7 +35,7 @@ const currentAgent = ref(agentList.value?.[0]);
 const currentPlatform = ref(agentList.value?.[0]?.platforms?.[0]);
 const userInput = ref('');
 
-const emit = defineEmits(['send-message', 'get-answer', 'post-conversation']);
+const emit = defineEmits(['send-message', 'post-answer', 'post-conversation']);
 
 const setCurrentAgent = (it) => {
   currentAgent.value = it;
@@ -53,7 +53,7 @@ const sendMessage = async () => {
   if (!userInput.value) return;
   console.log('sendMessage：', userInput.value);
   emit('send-message', userInput.value)
-  getAnswer(userInput.value);
+  postAnswer(userInput.value);
   // postConversation(userInput.value);
   userInput.value = "";
 };
@@ -71,17 +71,17 @@ const postToken = async () => {
   }
 };
 
-const getAnswer = async (question) => {
+const postAnswer = async (question) => {
   try {
-    const res = await getAnswerApi({
+    const res = await postAnswerApi({
       question: question,
       agent: currentAgent.value || defaultAgent,
       platform: currentPlatform.value || defaultPlatform
     });
-    emit('get-answer', normalizeAnswerResponse(res.data, currentPlatform.value || defaultPlatform));
-    // console.log('getAnswerApi', res);
+    emit('post-answer', normalizeAnswerResponse(res.data, currentPlatform.value || defaultPlatform));
+    // console.log('postAnswerApi', res);
   } catch (error) {
-    console.log('getAnswerApi error', error);
+    console.log('postAnswerApi error', error);
   }
 };
 
