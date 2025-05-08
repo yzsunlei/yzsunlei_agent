@@ -3,7 +3,7 @@ import axios from 'axios';
 const instance = axios.create({
   baseURL: 'http://127.0.0.1:3000',
   // baseURL: 'http://agent-sls.yzsunlei.com',
-  timeout: 10000
+  timeout: 60000
 })
 
 export const postTokenApi = async ({ agent, platform }) => {
