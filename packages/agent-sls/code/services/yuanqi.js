@@ -12,7 +12,7 @@ const yuanqiClient = axios.create({
 // 获取 access_token
 export const getYuanqiAccessToken = async () => {
   try {
-    return await process.env.VITE_YUANQI_CLIENT_SECRET || "NtJCBCgLEFyvTSxNNydQ5zA5lpfFP5aF";
+    return await process.env.VITE_YUANQI_CLIENT_SECRET;
   } catch (error) {
     console.error('获取元器 access_token 失败:', error);
     throw error;

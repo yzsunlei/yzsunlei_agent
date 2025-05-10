@@ -1,6 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
+import dotenv from "dotenv";
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.use(cors({
   credentials: true,
   maxAge: 86400 // 预检请求缓存时间（秒）
 }));
+dotenv.config();
 
 import { 
   postTokenApi,
