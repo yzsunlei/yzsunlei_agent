@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { SSE } from "sse.js";
 
 // 创建一个 Axios 实例
 const yuanqiClient = axios.create({
@@ -13,7 +12,7 @@ const yuanqiClient = axios.create({
 // 获取 access_token
 export const getYuanqiAccessToken = async () => {
   try {
-    return await process.env.VITE_YUANQI_CLIENT_SECRET;
+    return await process.env.VITE_YUANQI_CLIENT_SECRET || "NtJCBCgLEFyvTSxNNydQ5zA5lpfFP5aF";
   } catch (error) {
     console.error('获取元器 access_token 失败:', error);
     throw error;
@@ -68,17 +67,19 @@ export const postYuanqiConversationResponse = async (message, access_token, plat
       user_id: '',
       stream: true
     });
-    const source = new SSE(url,
-      {
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${access_token}` },
-        method: "post",
-        payload: payload
-      }
-    );
-    return source;
+    const response = await axios({
+      method: 'post',
+      url: url,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${access_token}`
+      },
+      data: JSON.parse(payload),
+      responseType: 'stream'
+    });
+    return response;
   } catch (error) {
     console.error('元器 API 请求失败:', error);
     throw error;
   }
 };
-

@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { SSE } from "sse.js";
 
 // 创建一个 Axios 实例
 const wenxinClient = axios.create({
@@ -72,17 +71,18 @@ export const postWenxinConversationResponse = async (message, access_token, plat
       from: 'openapi',
       openId: 'your_open_id' // 替换为实际的 openId
     });
-    const source = new SSE(url,
-      {
-        headers: { 'Content-Type': 'application/json' },
-        method: "post",
-        payload: payload
-      }
-    );
-    return source;
+    const response = await axios({
+      method: 'post',
+      url: url,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data: JSON.parse(payload),
+      responseType: 'stream'
+    });
+    return response;
   } catch (error) {
     console.error('文心 API 请求失败:', error);
     throw error;
   }
 };
-

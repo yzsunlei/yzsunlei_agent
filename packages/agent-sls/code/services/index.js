@@ -1,4 +1,4 @@
-import { getKouziAccessToken, getKouziChatResponse, postKouziConversationResponse } from './kouzi.js';
+import { getKouziAccessToken, getKouziChatResponse, postKouziConversationResponse} from './kouzi.js';
 import { getYuanqiAccessToken, getYuanqiChatResponse, postYuanqiConversationResponse } from './yuanqi.js';
 import { postZhipuToken, getZhipuChatResponse, postZhipuConversationResponse } from './zhipu.js';
 import { getWenxinAccessToken, getWenxinChatResponse, postWenxinConversationResponse } from './wenxin.js';

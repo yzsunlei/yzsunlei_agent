@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { SSE } from "sse.js";
 
 // 创建一个 Axios 实例
 const kouziClient = axios.create({
@@ -64,14 +63,17 @@ export const postKouziConversationResponse = async (message, access_token, platf
       ],
       stream: true
     });
-    const source = new SSE(url,
-      {
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${access_token}` },
-        method: "post",
-        payload: payload
-      }
-    );
-    return source;
+    const response = await axios({
+      method: 'post',
+      url: url,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${access_token}`
+      },
+      data: JSON.parse(payload),
+      responseType: 'stream'
+    });
+    return response;
   } catch (error) {
     console.error('扣子 API 请求失败:', error);
     throw error;
