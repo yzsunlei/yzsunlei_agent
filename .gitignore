@@ -5,6 +5,4 @@ dist
 .DS_Store
 .hbuilderx
 .env
-.env.development
-.env.production
 .s
