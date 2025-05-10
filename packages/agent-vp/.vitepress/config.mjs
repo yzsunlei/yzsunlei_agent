@@ -1,7 +1,10 @@
-import { defineConfig } from 'vitepress'
+import { defineConfig, loadEnv } from 'vitepress'
+
+const env = loadEnv(process.env.NODE_ENV || 'development', process.cwd(), 'VITE_')
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
+  base: "/agent_vp/",
   title: "Agent-vp",
   description: "My helpful ai agent sets",
   themeConfig: {
@@ -29,8 +32,7 @@ export default defineConfig({
       open: true,
       proxy: {
         '/api': {
-          target: 'http://127.0.0.1:3000',
-          // target: 'http://agent-sls.yzsunlei.com',
+          target: env.VITE_API_BASE_URL,
           changeOrigin: true,
           ws: true,
           rewrite: (path) => path.replace(/^\/api/, '')

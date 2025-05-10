@@ -5,4 +5,5 @@ dist
 .DS_Store
 .hbuilderx
 .env
+.env.*
 .s
