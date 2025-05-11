@@ -5,7 +5,7 @@ const env = loadEnv(process.env.NODE_ENV || 'development', process.cwd(), 'VITE_
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   base: "/agent_vp/",
-  title: "Agent-vp",
+  title: "小磊哥er的AI Agent",
   description: "My helpful ai agent sets",
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config

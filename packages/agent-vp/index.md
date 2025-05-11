@@ -3,7 +3,7 @@
 layout: home
 
 hero:
-  name: "Agent-vp"
+  name: "小磊哥er的AI Agent"
   text: "My wonderful ai agent sets"
   image:
     src: /assets/banner.png
