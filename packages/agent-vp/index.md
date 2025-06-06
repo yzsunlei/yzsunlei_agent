@@ -3,8 +3,8 @@
 layout: home
 
 hero:
-  name: "小磊哥er的AI Agent"
-  text: "My wonderful ai agent sets"
+  name: "Agent Boxs"
+  text: "有用的AI智能体集合"
   image:
     src: /assets/banner.png
     alt: AI Agent
@@ -18,7 +18,7 @@ hero:
 
 features:
   - title: 多平台Agent调用
-    details: 支持配置使用文心智能体、扣子智能体、清华智谱等多家平台
+    details: 支持配置使用扣子智能体、文心智能体、清华智谱等多家平台
   - title: 支持解析丰富内容
     details: 支持解析Markdown、表格、图表、PPT等多种格式展示
   - title: 多场景插件支持

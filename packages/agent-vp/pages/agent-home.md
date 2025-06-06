@@ -5,7 +5,7 @@ aside: false
 
 # AI Agent 对话
 
-欢迎使用我的 AI 对话应用！在这里，你可以与多个平台的智能体进行对话。
+欢迎使用小磊哥er的Agent Boxs！在这里，你可以与多个平台的智能体进行对话。
 
 <Messages :messages="messages" id="messages" />
 
@@ -19,7 +19,7 @@ import Messages from '../cmps/messages/index.vue';
 const chatMessages = ref();
 const messages = ref([
   {  message: '你好！你是谁？', sender: 'user', type: 'text' },
-  {  message: '我是Agent-vp，一个集成百度-文心、清华-智谱、字节-扣子等多家智能体平台的Agent工具，我可以调用多平台的Agent API，并支持解析Markdown、表格、图表、PPT等多种格式内容。如果你有任何问题或需要帮助，尽管问我吧！', sender: 'agent', type: 'text' }
+  {  message: '我是一个集成字节-扣子、百度-文心、清华-智谱等多家智能体平台的Agent工具，我可以调用多平台的Agent API，并支持解析Markdown、表格、图表、PPT等多种格式内容。如果你有任何问题或需要帮助，尽管问我吧！', sender: 'agent', type: 'text' }
 ]);
 
 const onSendMessage = (message) => {

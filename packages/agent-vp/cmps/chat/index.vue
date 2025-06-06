@@ -13,7 +13,7 @@
       </div>
     </div>
     <div class="chat-body">
-      <el-input v-model="userInput" type="textarea" rows="2" placeholder="请输入您的问题" @keyup.enter="sendMessage"
+      <el-input v-model="userInput" type="textarea" rows="3" placeholder="请输入您的问题" @keyup.enter="sendMessage"
         clearable />
     </div>
     <div class="chat-footer">
@@ -134,6 +134,7 @@ onMounted(() => {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      margin-top: 8px;
 
       .title {
         font-size: 14px;
