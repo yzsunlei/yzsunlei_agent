@@ -6,10 +6,17 @@
       </div>
       <div class="chat-current" v-if="currentAgent.name">
         <div class="title"><el-icon><Place /></el-icon> <span>{{ currentAgent.name }}</span></div>
-        <el-select v-model="currentPlatform" :value-key="'type'" size="medium" style="width: 120px"
-          @change="changePlatform">
-          <el-option :key="it.type" :label="it.name" :value="it" v-for="it in currentAgent.platforms" />
-        </el-select>
+        <div class="platform">
+          <el-tooltip content="点击去原平台看看" placement="top">
+            <a :href="currentPlatform.url" target="_blank" style="margin-right: 8px">
+              <el-icon><Connection /></el-icon>
+            </a>
+          </el-tooltip>
+          <el-select v-model="currentPlatform" :value-key="'type'" size="medium" style="width: 120px"
+            @change="changePlatform">
+            <el-option :key="it.type" :label="it.name" :value="it" v-for="it in currentAgent.platforms" />
+          </el-select>
+        </div>
       </div>
     </div>
     <div class="chat-body">
@@ -53,8 +60,8 @@ const sendMessage = async () => {
   if (!userInput.value) return;
   console.log('sendMessage：', userInput.value);
   emit('send-message', userInput.value)
-  postAnswer(userInput.value);
-  // postConversation(userInput.value);
+  // postAnswer(userInput.value);
+  postConversation(userInput.value);
   userInput.value = "";
 };
 
@@ -87,24 +94,41 @@ const postAnswer = async (question) => {
 
 const postConversation = async (question) => {
   try {
-    const source = await postConversationApi({
-      question: question,
-      agent: currentAgent.value || defaultAgent,
-      platform: currentPlatform.value || defaultPlatform
-    });
-    const eventName = currentPlatform.value?.type === 'kouzi' ? 'conversation.message.delta' : 'message';
-    source.addEventListener(eventName, function (e) {
+    const source = postConversationApi(
+      {
+        question,
+        agent: currentAgent.value || defaultAgent,
+        platform: currentPlatform.value || defaultPlatform
+      }
+    );
+
+    // 监听消息
+    source.addEventListener('message', (event) => {
       try {
-        var data = JSON.parse(e.data);
-        console.log(data);
+        const data = JSON.parse(event.data);
         emit('post-conversation', normalizeConversationResponse(data, currentPlatform.value || defaultPlatform));
-      } catch (error) {
-        console.log('postConversationApi parse error', error);
+      } catch (e) {
+        console.error('解析流数据失败:', event.data);
       }
     });
-    console.log('postConversationApi', source);
+
+    // 监听连接打开
+    source.addEventListener('open', () => {
+      console.log('✅ SSE 连接已打开');
+    });
+
+    // 异常事件
+    source.addEventListener('', (event) => {
+      console.log('📢 收到未知类型事件:', event.type, event.data);
+    });
+
+    // 错误监听
+    source.addEventListener('error', (err) => {
+      console.error('SSE 连接异常:', err);
+    });
+
   } catch (error) {
-    console.log('postConversationApi error', error);
+    console.error('postConversationApi error:', error);
   }
 };
 
@@ -113,7 +137,7 @@ onMounted(() => {
 });
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 .chat-card {
   width: 100%;
   margin: 0 auto;
@@ -136,7 +160,7 @@ onMounted(() => {
       align-items: center;
       margin-top: 8px;
 
-      .title {
+      .title, .platform {
         font-size: 14px;
         i,span {
           vertical-align: middle;

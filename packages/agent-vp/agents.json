@@ -2,7 +2,13 @@
     {
         "name": "前端技术博主小磊哥er",
         "platforms": [
-                        {
+            {
+                "name": "腾讯-元器",
+                "type": "yuanqi",
+                "id": "lsL3envFgP33",
+                "url": "https://yuanqi.tencent.com/agent/lsL3envFgP33"
+            },
+            {
                 "name": "字节-扣子",
                 "type": "kouzi",
                 "id": "7512272157092003840",
@@ -15,12 +21,6 @@
                 "url": "https://chatglm.cn/share/XF2WSHyy"
             },
             {
-                "name": "腾讯-元器",
-                "type": "yuanqi",
-                "id": "lsL3envFgP33",
-                "url": "https://yuanqi.tencent.com/agent/lsL3envFgP33"
-            },
-            {
                 "name": "百度-文心",
                 "type": "wenxin",
                 "id": "9xx9MxpQTKKTIcibccxUjwWT80kmKkwt",
@@ -31,7 +31,13 @@
     {
         "name": "前端技术博文写作帮手",
         "platforms": [
-                        {
+            {
+                "name": "腾讯-元器",
+                "type": "yuanqi",
+                "id": "lsL3envFgP33",
+                "url": "https://yuanqi.tencent.com/agent/BAylevZWGhV0"
+            },
+            {
                 "name": "字节-扣子",
                 "type": "kouzi",
                 "id": "7512272157092003840",
@@ -44,12 +50,6 @@
                 "url": "https://chatglm.cn/share/2F2AS6UF"
             },
             {
-                "name": "腾讯-元器",
-                "type": "yuanqi",
-                "id": "lsL3envFgP33",
-                "url": "https://yuanqi.tencent.com/agent/BAylevZWGhV0"
-            },
-            {
                 "name": "百度-文心",
                 "type": "wenxin",
                 "id": "9xx9MxpQTKKTIcibccxUjwWT80kmKkwt",
@@ -60,7 +60,13 @@
     {
         "name": "前端技术演讲特训伙伴",
         "platforms": [
-                        {
+            {
+                "name": "腾讯-元器",
+                "type": "yuanqi",
+                "id": "lsL3envFgP33",
+                "url": "https://yuanqi.tencent.com/agent/RrvfVHjoZqxT"
+            },
+            {
                 "name": "字节-扣子",
                 "type": "kouzi",
                 "id": "7512272157092003840",
@@ -71,12 +77,6 @@
                 "type": "zhipu",
                 "id": "684296e6c9e23c825b645990",
                 "url": "https://chatglm.cn/share/OF2hSkvE"
-            },
-            {
-                "name": "腾讯-元器",
-                "type": "yuanqi",
-                "id": "lsL3envFgP33",
-                "url": "https://yuanqi.tencent.com/agent/RrvfVHjoZqxT"
             },
             {
                 "name": "百度-文心",
@@ -90,6 +90,12 @@
         "name": "前端工程师面试指导",
         "platforms": [
             {
+                "name": "腾讯-元器",
+                "type": "yuanqi",
+                "id": "lsL3envFgP33",
+                "url": "https://yuanqi.tencent.com/agent/hxQXTrmZbbH8"
+            },
+            {
                 "name": "字节-扣子",
                 "type": "kouzi",
                 "id": "7512272157092003840",
@@ -100,12 +106,6 @@
                 "type": "zhipu",
                 "id": "684296e6c9e23c825b645990",
                 "url": "https://chatglm.cn/share/bF2xSkjq"
-            },
-            {
-                "name": "腾讯-元器",
-                "type": "yuanqi",
-                "id": "lsL3envFgP33",
-                "url": "https://yuanqi.tencent.com/agent/hxQXTrmZbbH8"
             },
             {
                 "name": "百度-文心",
