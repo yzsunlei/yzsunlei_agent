@@ -1,0 +1,28 @@
+html, body, #root
+    height: 100%
+    /*清浮动*/
+.clearfix:after
+    content: "."
+    display: block
+    height: 0
+    clear: both
+    visibility: hidden
+.clearfix
+    display:block
+iframe
+    width: 100%
+    height: 100%
+    border: none
+#app
+    min-height: 100vh
+    width: 100vw
+    overflow: hidden
+
+.el-tabs
+    .el-tabs__item
+        background: -webkit-linear-gradient(120deg, #bd34fe 30%, #41d1ff);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+    .el-tabs__active-bar
+        background: -webkit-linear-gradient(120deg, #bd34fe 30%, #41d1ff);
