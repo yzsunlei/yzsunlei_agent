@@ -103,7 +103,8 @@ const postConversation = async (question) => {
     );
 
     // 监听消息
-    source.addEventListener('message', (event) => {
+    const eventName = currentPlatform.value?.type === 'kouzi' ? 'conversation.message.delta' : 'message';
+    source.addEventListener(eventName, (event) => {
       try {
         const data = JSON.parse(event.data);
         emit('post-conversation', normalizeConversationResponse(data, currentPlatform.value || defaultPlatform));

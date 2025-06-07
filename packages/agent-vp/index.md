@@ -6,7 +6,7 @@ hero:
   name: "Agent Boxs"
   text: "有用的AI智能体集合"
   image:
-    src: /assets/banner.png
+    src: /banner.png
     alt: AI Agent
   actions:
     - theme: brand
